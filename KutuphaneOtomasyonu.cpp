@@ -87,7 +87,7 @@ void AnaMenu()
 	int secim;
 	int no;
 	cout.setf(ios::right);
-	cout<<std::right<<setw(15)<<"                                Düzce Üniversitesi Kütüphane Otomasyonu"<<endl;
+	cout<<std::right<<setw(15)<<"Düzce Üniversitesi Kütüphane Otomasyonu"<<endl;
 	cout<<"1-Kitap Ekle"<<endl;
 	cout<<"2-Kitap Ara"<<endl;
 	cout<<"3-Çıkış"<<endl;
