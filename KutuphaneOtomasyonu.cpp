@@ -10,7 +10,6 @@
 using namespace std;
 
 int sayac;
-int kitapkontrol;
 class Kitap
 {
 public:
@@ -24,10 +23,13 @@ void Kitap::KitapbilgileriGir()
 {
 	cout<<"Kitap Nosunu Giriniz";
 	cin>>kitapkodu;
+	
 	cout<<"Kitap Adını Giriniz";
 	cin>>kitapadi;
+	
 	cout<<"Kitap Yazar Adı Giriniz";
 	cin>>kitapyazariadi;
+	
 	cout<<"Kitap Yazar Soyadını Giriniz";
 	cin>>kitapyazarisoyadi;
 }
@@ -54,14 +56,14 @@ void Kutuphane::KitapEkle()
 	Kitap kitap;
 	kitapkayit.open("Kayit.txt",ios::out|ios::in|ios::app);
 	kitap.KitapbilgileriGir();
-		kitapkayit<<std::left<<setw(10)<<kitap.kitapkodu
+	kitapkayit<<std::left<<setw(10)<<kitap.kitapkodu
 		<<setw(20)<<kitap.kitapadi<<
 		setw(15)<<kitap.kitapyazariadi<<
 		setw(10)<<kitap.kitapyazarisoyadi<<endl;
-	kitapkayit.close();
+
 	cout<<"Kitap Başarıyla Eklenmiştir...."<<endl;
 	
-	
+		kitapkayit.close();
 }
 
 void Kutuphane::KitapBul(int no)
@@ -94,13 +96,15 @@ void AnaMenu()
 	cin>>secim;
 	switch (secim)
 	{
-	case 1:kitapkontrol=0; islemler.KitapEkle(); 	break;
-	case 2:	sayac=0; system("cls");
+	case 1: islemler.KitapEkle(); 	break;
+	case 2:	sayac=0;
 		cout<<"Bulmak İstediğiniz Kitap Kodunu Giriniz"; cin>>no; islemler.KitapBul(no);
 		if (sayac==0)
 		{
 			cout<<"Kitap Bulunamadı";
-		}break;	
+			system("cls");
+		AnaMenu();
+		}		break;	
 	case 3:exit(0); break;
 	default:cout<<"Yanlış Seçim Yaptınız"; system("cls"); AnaMenu();
 		break;
@@ -108,10 +112,30 @@ void AnaMenu()
 }
 
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL, "Turkish");
 	AnaMenu();
+	int islem=0;
+	do
+	{
+		cout<<"0-Ana Menü"<<endl<<"3-Çıkış"<<endl;
+		cin>>islem;
+		if (islem==0)
+		{
+			system("cls");
+			AnaMenu();
+		}
+		else if (islem==0)
+		{
+			exit(0);
+		}
+		else
+		{
+			cout<<"Yanlış Seçim Yaptınız";
+		}
+	} while (islem==0);
+	
+	
 	return 0;
 }
