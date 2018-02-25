@@ -10,6 +10,7 @@
 using namespace std;
 
 int sayac;
+int kitapkontrol;
 class Kitap
 {
 public:
@@ -41,6 +42,16 @@ void Kitap::KitapBigileriYazdir()
 	cout<<"Kitap Yazarı....:"<<kitapyazariadi<<" "<<kitapyazarisoyadi<<endl;
 }
 
+
+
+class KitapKontrol
+{
+public: int kitapkod;
+		string kitapad,kitapyazarad,kitapyazarsoyad;
+};
+
+
+
 class Kutuphane
 {
 public:
@@ -54,15 +65,30 @@ void Kutuphane::KitapEkle()
 {
 	fstream kitapkayit;
 	Kitap kitap;
-	kitapkayit.open("Kayit.txt",ios::out|ios::in|ios::app);
+	KitapKontrol kitapkont;
+	kitapkayit.open("Kayit.txt",ios::in|ios::app);
 	kitap.KitapbilgileriGir();
-	kitapkayit<<std::left<<setw(10)<<kitap.kitapkodu
+		while (kitapkayit>>kitapkont.kitapkod>>kitapkont.kitapad>>kitapkont.kitapyazarad>>kitapkont.kitapyazarsoyad)
+		{
+			if (kitapkont.kitapkod==kitap.kitapkodu)
+			{
+				kitapkontrol++;
+				cout<<"Kitap vardır";
+			}
+		}
+		kitapkayit.close();
+		kitapkayit.open("Kayit.txt",ios::out|ios::app);
+		if (kitapkontrol==0)
+		{
+			kitapkayit<<std::left<<setw(10)<<kitap.kitapkodu
 		<<setw(20)<<kitap.kitapadi<<
 		setw(15)<<kitap.kitapyazariadi<<
 		setw(10)<<kitap.kitapyazarisoyadi<<endl;
 
 	cout<<"Kitap Başarıyla Eklenmiştir...."<<endl;
-	
+		}
+
+
 		kitapkayit.close();
 }
 
@@ -96,12 +122,13 @@ void AnaMenu()
 	cin>>secim;
 	switch (secim)
 	{
-	case 1: islemler.KitapEkle(); 	break;
+	case 1:kitapkontrol=0; islemler.KitapEkle(); 	break;
 	case 2:	sayac=0;
 		cout<<"Bulmak İstediğiniz Kitap Kodunu Giriniz"; cin>>no; islemler.KitapBul(no);
 		if (sayac==0)
 		{
 			cout<<"Kitap Bulunamadı";
+			system("pause");
 			system("cls");
 		AnaMenu();
 		}		break;	
@@ -126,7 +153,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			system("cls");
 			AnaMenu();
 		}
-		else if (islem==0)
+		else if (islem==3)
 		{
 			exit(0);
 		}
