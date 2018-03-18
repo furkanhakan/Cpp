@@ -3,7 +3,8 @@
 
 
 /*                                  Aşağıdaki   #include "ConsoleColor.h"    kodu yazıları renklendirmek için kullanılmıştır.
-                                    Bu kodu kullanmak için projenize Header eklemeniz lazım.
+                                    Bu kodu kullanmak için projenize Header olarak kodları eklemeniz gerekmektedir
+				    			İlgili Kodlar Paylaşılmıştır.
 */
 
 
