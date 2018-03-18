@@ -17,7 +17,6 @@
 #include <Windows.h>
 #include "ConsoleColor.h"//yazı renkleri
 using namespace std;
-//Yazılar Sarı Olacak
 string MenuTitle;
 //İmlecin Pozisyonunu Değiştirme
 void gotoxy(short x,short y)
