@@ -1,4 +1,4 @@
-*/                                    Bu kodları projenize Header olarak ekleyin ve projenizde çağırın
+/*                                    Bu kodları projenize Header olarak ekleyin ve projenizde çağırın
 */
 
 
