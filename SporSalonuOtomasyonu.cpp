@@ -1,12 +1,10 @@
-// SporSalonuOtomasyon.cpp : Defines the entry point for the console application.
-//
-
-
 /*                                  Aşağıdaki   #include "ConsoleColor.h"    kodu yazıları renklendirmek için kullanılmıştır.
                                     Bu kodu kullanmak için projenize Header olarak kodları eklemeniz gerekmektedir
 				    			İlgili Kodlar Paylaşılmıştır.
 */
 
+// SporSalonuOtomasyon.cpp : Defines the entry point for the console application.
+//
 
 #include "stdafx.h"
 #include <iostream>
@@ -16,9 +14,192 @@
 #include <iomanip>
 #include <time.h>
 #include <Windows.h>
-#include "ConsoleColor.h"//yazı renkleri
+#include <sstream>
+#include "ConsoleColor.h"
 using namespace std;
+//Yazılar Sarı Olacak
 string MenuTitle;
+int nom=0;
+int counter=0;
+char s=0;
+//Üyeler İle İlgili Bilgiler
+class Member
+{
+public:
+	string name,surname,no;
+	string regisdate,enddate;
+	void EnterInfo();
+	void ShowInfo(int number);
+};
+void Member::EnterInfo()
+{
+	void gotoxy(short x,short y);
+	gotoxy(23,11);
+	cin>>name;
+	gotoxy(23,13);
+	cin>>surname;
+	gotoxy(23,15);
+	cin>>regisdate;
+	gotoxy(23,17);
+	cin>>enddate;
+	no="0001";
+	
+}
+void Member::ShowInfo(int number)
+{
+		void gotoxy(short x,short y);
+		gotoxy(2,8+number);
+		cout<<no;
+		gotoxy(15,8+number);
+		cout<<name;
+		gotoxy(38,8+number);
+		cout<<surname;
+		gotoxy(63,8+number);
+		cout<<regisdate;
+		gotoxy(85,8+number);
+		cout<<enddate;
+	
+}
+//Üye Eklerken Diğer Üyeleri Kontrol Etme
+class MemberControl
+{
+	public:
+	string name,surname,no;
+	string regisdate,enddate;
+};
+//Dosya İşlemleri
+class Gym
+{
+public:
+	void AddMember();
+	void ShowMember();
+	void DeleteMember();
+	
+};
+void Gym::AddMember()
+{
+	void MainMenu();
+	void gotoxy(short x,short y);
+	void Wait(int time);
+	int c0;
+	Member member;
+	MemberControl control;
+	fstream file;
+	member.EnterInfo();
+	do
+	{
+		file.open("Members.txt",ios::in|ios::app);
+		c0=0;
+	while (file>>control.no>>control.name>>control.surname>>control.regisdate>>control.enddate)
+	{
+		if (member.no==control.no)
+		{
+			c0++;
+		}
+	}
+	file.close();
+	if (c0>0)
+	{
+		member.no=stoi(member.no)+1;
+	}
+	} while (c0>0);
+	file.open("Members.txt",ios::out|ios::app);
+	file.setf(ios::left);
+	file<<setw(10)<<member.no<<setw(20)<<member.name<<setw(20)<<member.surname<<setw(20)<<
+	member.regisdate<<setw(20)<<member.enddate<<endl;
+	file.close();
+	gotoxy(20,22);
+	cout<<green<<"Başarıyla Eklenmiştir.";
+	Wait(1);
+	gotoxy(1,25);
+	cout<<"[1] YENİ ÜYE EKLE";
+	gotoxy(1,26);
+	cout<<"[9] ANA MENU";
+	gotoxy(1,27);
+	cout<<"[X] ÇIKIŞ";
+	gotoxy(1,29);
+	cout<<"SEÇİMİNİZ : [ ]";
+	gotoxy(14,28);
+	cin>>s;
+	if (s==1)
+	{
+		system("CLS");
+	}
+	else if (s==9)
+	{
+		system("CLS");
+		MainMenu();
+	}
+	else if (s=='X'||s=='x')
+	{
+		exit(0);
+	}
+	else
+	{
+
+	}
+}
+void Gym::ShowMember()
+{
+	
+	int number=0;
+	fstream file;
+	Member member;
+	file.open("Members.txt",ios::in|ios::app);
+	while (file>>member.no>>member.name>>member.surname>>member.regisdate>>member.enddate)
+	{
+		member.ShowInfo(number);
+		number+=2;
+	}
+	file.close();
+}
+void Gym::DeleteMember()
+{
+	void gotoxy(short x,short y);
+	Member member;
+	int no;
+	gotoxy(35,8+(nom*2)+4);
+	cin>>no;
+	fstream file;
+	fstream filetemp;
+	file.open("Members.txt",ios::in|ios::out|ios::app);
+	filetemp.open("Memberstemp.txt",ios::in|ios::out|ios::app);
+	filetemp.setf(ios::left);
+	while (file>>member.no>>member.name>>member.surname>>member.regisdate>>member.enddate)
+	{
+		if (no!=stoi(member.no))
+		{
+			
+		filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<setw(20)<<member.surname<<setw(20)<<
+		member.regisdate<<setw(20)<<member.enddate<<endl;
+		}
+		else
+		{
+			counter++;
+		}
+	}
+	file.close();
+	remove("Members.txt");
+	filetemp.close();
+	rename("Memberstemp.txt","Members.txt");
+}
+
+void nomf()
+{
+	fstream file;
+	Member member;
+	file.open("Members.txt",ios::in|ios::app);
+	while (file>>member.no>>member.name>>member.surname>>member.regisdate>>member.enddate)
+	{
+		nom++;
+	}
+	file.close();
+}
+
+/*									Ekran Yazıları
+
+*/
+
 //İmlecin Pozisyonunu Değiştirme
 void gotoxy(short x,short y)
 {
@@ -93,8 +274,6 @@ void AddNewMember()
 {
 	void Wait(int wait);
 	void MainMenu();
-	string adi,soyadi;
-	int baslangic,bitis;
 	MenuTitle="YENİ KAYIT EKLEME";
 	Title();
 	Frame(22,8);
@@ -106,93 +285,94 @@ void AddNewMember()
 	cout<<"BAŞLANGIÇ TARİHİ : ";
 	gotoxy(4,17);
 	cout<<"BİTİŞ TARİHİ     : ";
-	gotoxy(23,11);
-	cin>>adi;
-	gotoxy(23,13);
-	cin>>adi;
-	gotoxy(23,15);
-	cin>>adi;
-	gotoxy(23,17);
-	cin>>adi;
 	gotoxy(20,22);
-	cout<<green<<"Kayıt Başarılı";
-	cout<<white;
-	Wait(3);
-	MainMenu();
 
 }
 //Üye Görüntüleme
 void MemberViews()
 {
-	Title();
 	for (int i = 0; i < 3; i++)
 	{
-		gotoxy(40,8+i);
+		gotoxy(40,1+i);
 		cout<<"|";
-		gotoxy(70,8+i);
+		gotoxy(70,1+i);
 		cout<<"|";
 	}
 	for (int i = 0; i < 31; i++)
 	{
-		gotoxy(40+i,7);
+		gotoxy(40+i,0);
 		cout<<"=";
-		gotoxy(40+i,11);
+		gotoxy(40+i,4);
 		cout<<"=";
 	}
-	gotoxy(47,9);
+	gotoxy(47,2);
 	cout<<"KAYIT GÖRÜNTÜLEME";
-	gotoxy(3,13);
+	gotoxy(3,6);
 	cout<<"NO";
-	gotoxy(19,13);
+	gotoxy(19,6);
 	cout<<"ADI";
-	gotoxy(42,13);
+	gotoxy(42,6);
 	cout<<"SOYADI";
-	gotoxy(61,13);
+	gotoxy(61,6);
 	cout<<"BAŞLANGIÇ TARİHİ";
-	gotoxy(85,13);
+	gotoxy(85,6);
 	cout<<"BİTİŞ TARİHİ";
 	for (int i = 0; i < 100; i++)
 	{
-		gotoxy(1+i,14);
+		gotoxy(1+i,7);
 		cout<<"-";
 	}
-	for (int i = 0; i < 10; i++)
+
+	if (nom>0)
 	{
-		gotoxy(0,13+i);
+		for (int i = 0; i < (nom*2)+4; i++)
+		{
+		gotoxy(0,6+i);
 		cout<<"|";
-		gotoxy(8,13+i);
-		cout<<"|";
-		gotoxy(32,13+i);
-		cout<<"|";
-		gotoxy(56,13+i);
-		cout<<"|";
-		gotoxy(80,13+i);
-		cout<<"|";
-		gotoxy(100,13+i);
-		cout<<"|";
-	}
 	
-	for (int i = 0; i < 6; i+=2)
-	{
-		gotoxy(3,15+i);
-		cout<<i;
-		gotoxy(15,15+i);
-		cout<<"Bahadır";
-		gotoxy(38,15+i);
-		cout<<"Duman";
-		gotoxy(58,15+i);
-		cout<<"02.02.2018";
-		gotoxy(84,15+i);
-		cout<<"02.05.2018";
+		gotoxy(100,6+i);
+		cout<<"|";
+		}
+		for (int i = 0; i < (nom*2)+3; i++)
+		{
+			gotoxy(8,6+i);
+			cout<<"|";
+			gotoxy(32,6+i);
+			cout<<"|";
+			gotoxy(56,6+i);
+			cout<<"|";
+			gotoxy(80,6+(i));
+			cout<<"|";
+		}
+	
+		for (int i = 0; i < 99; i++)
+		{
+			gotoxy(1+i,4+(nom*2)+4);
+			cout<<"=";
+		}
+
+		for (int i = 0; i < 101; i++)
+		{
+			gotoxy(0+i,6+((nom*2)+4));
+			cout<<"+";
+		}
+		gotoxy(40,6+(nom*2)+3);
+		cout<<"Görüntüleme Türü : TÜMÜ";
 	}
+	else
+	{
+		gotoxy(40,8);
+		cout<<red<<"KULLANICI LİSTESİ BOŞ"<<white;
+	}
+
 }
 //Üye Güncelleme
 void MemberUpdate()
 {
 	MemberViews();
-	gotoxy(47,9);
+	gotoxy(47,2);
 	cout<<"KAYIT GÜNCELLEME";
-	gotoxy(63,9);
+	gotoxy(63,2);
 	cout<<" ";
 
 }
@@ -200,8 +380,10 @@ void MemberUpdate()
 void MemberDelete()
 {
 	MemberViews();
-	gotoxy(47,9);
+	gotoxy(47,2);
 	cout<<"   KAYIT SİLME    ";
+	gotoxy(0,8+((nom*2)+4));
+	cout<<"Silmek İstediğiniz Üye Numarası : [  ]";
 	
 }
 //ilk Menu Yazıları
@@ -232,9 +414,12 @@ void Wait(int time)
 void MainMenu()
 {
 	system("CLS");
+	Member member;
+	Gym gym;
 	char islem;
 	do
 	{
+	nomf();
 	MenuTitle="MENU";
 	Title();
 	Frame(28,8);
@@ -243,12 +428,21 @@ void MainMenu()
 	gotoxy(20,22);
 	switch (islem)
 	{
-	case '1':system("CLS"); AddNewMember(); break;
-	case '2':system("CLS"); MemberViews(); break;
-	case '3':system("CLS"); MemberUpdate(); break;
-	case '4':system("CLS"); MemberDelete(); break;
-	case 'x': cout<<"çıkış"; exit(0); break;
-	case 'X': cout<<"çıkış"; exit(0);break;
+	case '1':system("CLS"); AddNewMember(); gym.AddMember(); break;
+	case '2':system("CLS"); MemberViews(); gym.ShowMember(); break;
+	case '3':system("CLS"); MemberUpdate(); gym.ShowMember(); break;
+	case '4':system("CLS"); counter=0; MemberDelete(); gym.ShowMember(); gym.DeleteMember(); 
+		if (counter==0)
+		{
+			cout<<red<<"Kullanıcı Bulunamadı."; cout<<white;
+		}
+		else
+		{
+			cout<<green<<"Kullanıcı Silindi."; cout<<white;
+		}
+		break;
+	case 'x': cout<<"ÇIKIŞ"; exit(0); break;
+	case 'X': cout<<"ÇIKIŞ"; exit(0);break;
 	default:cout<<red<<"Yanlış Seçim Yaptınız"; cout<<white; islem=0; Wait(2); system("CLS");
 		break;
 	}
@@ -260,6 +454,7 @@ void MainMenu()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL,"Turkish");
+
 	MainMenu();
 	/*cout<<"Lütfen Bekleyiniz.";
 	for (int i = 5; i > 0; i--)
@@ -271,4 +466,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout<<endl<<endl<<endl;
 	return 0;
 }
+
+// GYM::AddMember dan devam et
+
 
