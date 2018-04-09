@@ -26,7 +26,8 @@ char s=0;
 class Member
 {
 public:
-	string name,surname,no;
+	int no;
+	string name,surname;
 	string regisdate,enddate;
 	void EnterInfo();
 	void ShowInfo(int number);
@@ -42,13 +43,13 @@ void Member::EnterInfo()
 	cin>>regisdate;
 	gotoxy(23,17);
 	cin>>enddate;
-	no="0001";
+	no=1;
 	
 }
 void Member::ShowInfo(int number)
 {
 		void gotoxy(short x,short y);
-		gotoxy(2,8+number);
+		gotoxy(3,8+number);
 		cout<<no;
 		gotoxy(15,8+number);
 		cout<<name;
@@ -64,7 +65,8 @@ void Member::ShowInfo(int number)
 class MemberControl
 {
 	public:
-	string name,surname,no;
+		int no;
+	string name,surname;
 	string regisdate,enddate;
 };
 //Dosya İşlemleri
@@ -80,15 +82,17 @@ void Gym::AddMember()
 {
 	void MainMenu();
 	void gotoxy(short x,short y);
+	void AddNewMember();
 	void Wait(int time);
 	int c0;
 	Member member;
 	MemberControl control;
 	fstream file;
+	Gym gym;
 	member.EnterInfo();
 	do
 	{
-		file.open("Members.txt",ios::in|ios::app);
+		file.open("Members.txt",ios::in|ios::app|ios::out);
 		c0=0;
 	while (file>>control.no>>control.name>>control.surname>>control.regisdate>>control.enddate)
 	{
@@ -98,10 +102,10 @@ void Gym::AddMember()
 		}
 	}
 	file.close();
-	if (c0>0)
+		if (c0>0)
 	{
-		member.no=stoi(member.no)+1;
-	}
+		member.no=member.no+1;
+		}
 	} while (c0>0);
 	file.open("Members.txt",ios::out|ios::app);
 	file.setf(ios::left);
@@ -111,6 +115,7 @@ void Gym::AddMember()
 	gotoxy(20,22);
 	cout<<green<<"Başarıyla Eklenmiştir.";
 	Wait(1);
+	cout<<white;
 	gotoxy(1,25);
 	cout<<"[1] YENİ ÜYE EKLE";
 	gotoxy(1,26);
@@ -119,13 +124,15 @@ void Gym::AddMember()
 	cout<<"[X] ÇIKIŞ";
 	gotoxy(1,29);
 	cout<<"SEÇİMİNİZ : [ ]";
-	gotoxy(14,28);
+	gotoxy(14,29);
 	cin>>s;
-	if (s==1)
+	if (s=='1')
 	{
 		system("CLS");
+		AddNewMember();
+		gym.AddMember();
 	}
-	else if (s==9)
+	else if (s=='9')
 	{
 		system("CLS");
 		MainMenu();
@@ -136,12 +143,20 @@ void Gym::AddMember()
 	}
 	else
 	{
-
+	cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+		for (int i = 0; i < 3; i++)
+		{
+			Wait(1);
+			cout<<".";
+		}
+		MainMenu();
 	}
 }
 void Gym::ShowMember()
 {
-	
+	void gotoxy(short x,short y);
+	void Wait(int time);
+	void MainMenu();
 	int number=0;
 	fstream file;
 	Member member;
@@ -152,11 +167,75 @@ void Gym::ShowMember()
 		number+=2;
 	}
 	file.close();
+	if (nom==0)
+	{
+		gotoxy(1,(nom*2)+9);
+		cout<<"[9] ANA MENU";
+		gotoxy(1,(nom*2)+11);
+		cout<<"[X] ÇIKIŞ";
+		gotoxy(1,(nom*2)+13);
+		cout<<"SEÇİMİNİZ : [ ]";
+		gotoxy(14,(nom*2)+13);
+		cin>>s;
+		if (s=='9')
+		{
+			system("CLS");
+			MainMenu();
+		}
+		else if (s=='X'||s=='x')
+		{
+			exit(0);
+		}	
+		else
+		{
+			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+			for (int i = 0; i < 3; i++)
+			{
+				Wait(1);
+				cout<<".";
+			}
+			MainMenu();
+		}
+	}
+	else
+	{
+		gotoxy(1,(nom*2)+15);
+		cout<<"[9] ANA MENU";
+		gotoxy(1,(nom*2)+17);
+		cout<<"[X] ÇIKIŞ";
+		gotoxy(1,(nom*2)+19);
+		cout<<"SEÇİMİNİZ : [ ]";
+		gotoxy(14,(nom*2)+19);
+		cin>>s;
+		if (s=='9')
+		{
+			system("CLS");
+			MainMenu();
+		}
+		else if (s=='X'||s=='x')
+		{
+			exit(0);
+		}	
+		else
+		{
+			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+			for (int i = 0; i < 3; i++)
+			{
+				Wait(1);
+				cout<<".";
+			}
+			MainMenu();
+		}
+	}
 }
 void Gym::DeleteMember()
 {
+	void Wait(int time);
 	void gotoxy(short x,short y);
+	void MemberDelete();
+	void MainMenu();
 	Member member;
+	Gym gym;
 	int no;
 	gotoxy(35,8+(nom*2)+4);
 	cin>>no;
@@ -167,7 +246,7 @@ void Gym::DeleteMember()
 	filetemp.setf(ios::left);
 	while (file>>member.no>>member.name>>member.surname>>member.regisdate>>member.enddate)
 	{
-		if (no!=stoi(member.no))
+		if (no!=member.no)
 		{
 			
 		filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<setw(20)<<member.surname<<setw(20)<<
@@ -182,6 +261,54 @@ void Gym::DeleteMember()
 	remove("Members.txt");
 	filetemp.close();
 	rename("Memberstemp.txt","Members.txt");
+	if (counter==0)
+		{
+			cout<<red<<"Kullanıcı Bulunamadı."; cout<<white;
+		}
+		else
+		{
+			cout<<green<<"Kullanıcı Silindi."; cout<<white;
+		}
+
+	gotoxy(1,(nom*2)+15);
+	cout<<"[1] ÜYE SİL";
+	gotoxy(1,(nom*2)+17);
+	cout<<"[9] ANA MENU";
+	gotoxy(1,(nom*2)+19);
+	cout<<"[X] ÇIKIŞ";
+	gotoxy(1,(nom*2)+21);
+	cout<<"SEÇİMİNİZ : [ ]";
+	gotoxy(14,(nom*2)+21);
+	cin>>s;
+	if (s=='1')
+	{
+		system("CLS");
+		counter=0; 
+		MemberDelete(); 
+		gym.ShowMember(); 
+		gym.DeleteMember();
+	}
+	else if (s=='9')
+	{
+		system("CLS");
+		MainMenu();
+	}
+	else if (s=='X'||s=='x')
+	{
+		exit(0);
+	}
+	else
+	{
+		cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+		for (int i = 0; i < 3; i++)
+		{
+			Wait(1);
+			cout<<".";
+		}
+		MainMenu();
+	}
+
+
 }
 
 void nomf()
@@ -365,6 +492,9 @@ void MemberViews()
 		cout<<red<<"KULLANICI LİSTESİ BOŞ"<<white;
 	}
 
+
+
+
 }
 //Üye Güncelleme
 void MemberUpdate()
@@ -432,14 +562,9 @@ void MainMenu()
 	case '2':system("CLS"); MemberViews(); gym.ShowMember(); break;
 	case '3':system("CLS"); MemberUpdate(); gym.ShowMember(); break;
 	case '4':system("CLS"); counter=0; MemberDelete(); gym.ShowMember(); gym.DeleteMember(); 
-		if (counter==0)
-		{
-			cout<<red<<"Kullanıcı Bulunamadı."; cout<<white;
-		}
-		else
-		{
-			cout<<green<<"Kullanıcı Silindi."; cout<<white;
-		}
+		
+
+
 		break;
 	case 'x': cout<<"ÇIKIŞ"; exit(0); break;
 	case 'X': cout<<"ÇIKIŞ"; exit(0);break;
@@ -466,7 +591,5 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout<<endl<<endl<<endl;
 	return 0;
 }
-
-// GYM::AddMember dan devam et
 
 
