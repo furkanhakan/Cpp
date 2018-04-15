@@ -2,7 +2,6 @@
                                     Bu kodu kullanmak için projenize Header olarak kodları eklemeniz gerekmektedir
 				    			İlgili Kodlar Paylaşılmıştır.
 */
-
 // SporSalonuOtomasyon.cpp : Defines the entry point for the console application.
 //
 
@@ -22,6 +21,7 @@ string MenuTitle;
 int nom=0;
 int counter=0;
 char s=0;
+
 //Üyeler İle İlgili Bilgiler
 class Member
 {
@@ -76,6 +76,7 @@ public:
 	void AddMember();
 	void ShowMember();
 	void DeleteMember();
+	void UpdateMember();
 	
 };
 void Gym::AddMember()
@@ -167,69 +168,114 @@ void Gym::ShowMember()
 		number+=2;
 	}
 	file.close();
-	if (nom==0)
+	
+}
+void Gym::UpdateMember()
+{
+	void nomf();
+	void AddNewMember();
+	void Again();
+	void Wait(int time);
+	void gotoxy(short x,short y);
+	void MemberUpdate();
+	void MainMenu();
+	Gym gym;
+	Member member;
+	int no;
+	gotoxy(40,8+(nom*2)+4);
+	cin>>no;
+	fstream file;
+	fstream filetemp;
+	file.open("Members.txt",ios::in|ios::out|ios::app);
+	filetemp.open("Memberstemp.txt",ios::in|ios::out|ios::app);
+	filetemp.setf(ios::left);
+	while (file>>member.no>>member.name>>member.surname>>member.regisdate>>member.enddate)
 	{
-		gotoxy(1,(nom*2)+9);
-		cout<<"[9] ANA MENU";
-		gotoxy(1,(nom*2)+11);
-		cout<<"[X] ÇIKIŞ";
-		gotoxy(1,(nom*2)+13);
-		cout<<"SEÇİMİNİZ : [ ]";
-		gotoxy(14,(nom*2)+13);
-		cin>>s;
-		if (s=='9')
+		if (no==member.no)
 		{
 			system("CLS");
-			MainMenu();
+			AddNewMember();
+			gotoxy(22,8);
+			cout<<"   KAYIT GÜNCELLEME";
+			member.EnterInfo();
+			member.no=no;
+			filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<
+			setw(20)<<member.surname<<setw(20)<<
+			member.regisdate<<setw(20)<<member.enddate<<endl;
 		}
-		else if (s=='X'||s=='x')
-		{
-			exit(0);
-		}	
 		else
 		{
-			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
-			for (int i = 0; i < 3; i++)
-			{
-				Wait(1);
-				cout<<".";
-			}
-			MainMenu();
+				filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<
+				setw(20)<<member.surname<<setw(20)<<
+				member.regisdate<<setw(20)<<member.enddate<<endl;
+				counter++;
 		}
+	}
+	file.close();
+	remove("Members.txt");
+	filetemp.close();
+	rename("Memberstemp.txt","Members.txt");
+	
+	if (counter==nom)
+	{
+
+		cout<<red<<"Kullanıcı Bulunamadı."; cout<<white;
 	}
 	else
 	{
-		gotoxy(1,(nom*2)+15);
-		cout<<"[9] ANA MENU";
-		gotoxy(1,(nom*2)+17);
-		cout<<"[X] ÇIKIŞ";
-		gotoxy(1,(nom*2)+19);
-		cout<<"SEÇİMİNİZ : [ ]";
-		gotoxy(14,(nom*2)+19);
-		cin>>s;
-		if (s=='9')
+		gotoxy(20,22);
+		cout<<green<<"Kullanıcı Güncellendi."; cout<<white;
+	}
+
+	gotoxy(1,25);
+	cout<<"[1] ÜYE GÜNCELLE";
+	gotoxy(1,27);
+	cout<<"[9] ANA MENU";
+	gotoxy(1,29);
+	cout<<"[X] ÇIKIŞ";
+	gotoxy(1,31);
+	cout<<"SEÇİMİNİZ : [ ]";
+	gotoxy(14,31);
+	cin>>s;
+	if (s=='1')
+	{
+		nomf();
+		system("CLS");
+		counter=0; MemberUpdate();
+		if (nom!=0)
 		{
-			system("CLS");
-			MainMenu();
+			gym.ShowMember(); gym.UpdateMember();
 		}
-		else if (s=='X'||s=='x')
-		{
-			exit(0);
-		}	
 		else
 		{
-			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
-			for (int i = 0; i < 3; i++)
-			{
-				Wait(1);
-				cout<<".";
-			}
-			MainMenu();
+			Again();
 		}
 	}
+	else if (s=='9')
+	{
+		system("CLS");
+		MainMenu();
+	}
+	else if (s=='X'||s=='x')
+	{
+		exit(0);
+	}
+	else
+	{
+		cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+		for (int i = 0; i < 3; i++)
+		{
+			Wait(1);
+			cout<<".";
+		}
+		MainMenu();
+	}
+
 }
 void Gym::DeleteMember()
 {
+	void nomf();
+	void Again();
 	void Wait(int time);
 	void gotoxy(short x,short y);
 	void MemberDelete();
@@ -282,11 +328,17 @@ void Gym::DeleteMember()
 	cin>>s;
 	if (s=='1')
 	{
+		nomf();
 		system("CLS");
-		counter=0; 
-		MemberDelete(); 
-		gym.ShowMember(); 
-		gym.DeleteMember();
+		counter=0; MemberDelete(); 
+		if (nom!=0)
+		{
+			gym.ShowMember(); gym.DeleteMember(); 
+		}
+		else
+		{
+			Again();
+		}
 	}
 	else if (s=='9')
 	{
@@ -313,6 +365,7 @@ void Gym::DeleteMember()
 
 void nomf()
 {
+	nom=0;
 	fstream file;
 	Member member;
 	file.open("Members.txt",ios::in|ios::app);
@@ -504,6 +557,11 @@ void MemberUpdate()
 	cout<<"KAYIT GÜNCELLEME";
 	gotoxy(63,2);
 	cout<<" ";
+	if (nom!=0)
+	{
+		gotoxy(0,8+((nom*2)+4));
+		cout<<"Güncellemek İstediğiniz Üye Numarası : [  ]";
+	}
 
 }
 //Üye Sil
@@ -512,8 +570,12 @@ void MemberDelete()
 	MemberViews();
 	gotoxy(47,2);
 	cout<<"   KAYIT SİLME    ";
-	gotoxy(0,8+((nom*2)+4));
-	cout<<"Silmek İstediğiniz Üye Numarası : [  ]";
+	if (nom!=0)
+	{
+		gotoxy(0,8+((nom*2)+4));
+		cout<<"Silmek İstediğiniz Üye Numarası : [  ]";
+	}
+	
 	
 }
 //ilk Menu Yazıları
@@ -540,13 +602,79 @@ void Wait(int time)
 	wait=clock()+time*CLOCKS_PER_SEC;
 	while (clock()<wait) {}
 }
+//Tekrar Fonksiyonu
+void Again()
+{
+	void MainMenu();
+	if (nom==0)
+	{
+		gotoxy(1,(nom*2)+9);
+		cout<<"[9] ANA MENU";
+		gotoxy(1,(nom*2)+11);
+		cout<<"[X] ÇIKIŞ";
+		gotoxy(1,(nom*2)+13);
+		cout<<"SEÇİMİNİZ : [ ]";
+		gotoxy(14,(nom*2)+13);
+		cin>>s;
+		if (s=='9')
+		{
+			system("CLS");
+			MainMenu();
+		}
+		else if (s=='X'||s=='x')
+		{
+			exit(0);
+		}	
+		else
+		{
+			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+			for (int i = 0; i < 3; i++)
+			{
+				Wait(1);
+				cout<<".";
+			}
+			MainMenu();
+		}
+	}
+	else
+	{
+		gotoxy(1,(nom*2)+15);
+		cout<<"[9] ANA MENU";
+		gotoxy(1,(nom*2)+17);
+		cout<<"[X] ÇIKIŞ";
+		gotoxy(1,(nom*2)+19);
+		cout<<"SEÇİMİNİZ : [ ]";
+		gotoxy(14,(nom*2)+19);
+		cin>>s;
+		if (s=='9')
+		{
+			system("CLS");
+			MainMenu();
+		}
+		else if (s=='X'||s=='x')
+		{
+			exit(0);
+		}	
+		else
+		{
+			cout<<"Yanlış Seçim Yaptınız.Ana Menüye Yönlendiriliyosunuz.";
+			for (int i = 0; i < 3; i++)
+			{
+				Wait(1);
+				cout<<".";
+			}
+			MainMenu();
+		}
+	}
+}
 //Ana Menu
 void MainMenu()
 {
 	system("CLS");
+	char islem;
+	
 	Member member;
 	Gym gym;
-	char islem;
 	do
 	{
 	nomf();
@@ -558,10 +686,28 @@ void MainMenu()
 	gotoxy(20,22);
 	switch (islem)
 	{
-	case '1':system("CLS"); AddNewMember(); gym.AddMember(); break;
-	case '2':system("CLS"); MemberViews(); gym.ShowMember(); break;
-	case '3':system("CLS"); MemberUpdate(); gym.ShowMember(); break;
-	case '4':system("CLS"); counter=0; MemberDelete(); gym.ShowMember(); gym.DeleteMember(); 
+	case '1':system("CLS"); AddNewMember(); gym.AddMember();           break;
+	case '2':system("CLS"); MemberViews(); gym.ShowMember();  Again(); break;
+	case '3':system("CLS"); counter=0; MemberUpdate();
+		if (nom!=0)
+		{
+			gym.ShowMember(); gym.UpdateMember();
+		}
+		else
+		{
+			Again(); 
+		}
+
+		break;
+	case '4':system("CLS"); counter=0; MemberDelete(); 
+		if (nom!=0)
+		{
+			gym.ShowMember(); gym.DeleteMember(); 
+		}
+		else
+		{
+			Again();
+		}
 		
 
 
@@ -581,15 +727,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	setlocale(LC_ALL,"Turkish");
 
 	MainMenu();
-	/*cout<<"Lütfen Bekleyiniz.";
-	for (int i = 5; i > 0; i--)
-	{
-		cout<<".";
-		Wait(1);
-	}
-	cout<<endl<<"Kayıt Başarılı";*/
 	cout<<endl<<endl<<endl;
 	return 0;
 }
-
-
