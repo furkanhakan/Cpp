@@ -11,23 +11,30 @@
 
 using namespace std;
 
+int etraf[2][8] = { 	{-1,-0,+1,-1,-0,+1,-1,+1},
+						{-1,-1,-1,+1,+1,+1,-0,-0}	};
 struct kolay
 {
-			int bomba[10];
-			int sorgulama[10];
-			int sayi;
-			int gecici;
-			int varmiyokmu;
-			int tekrar;
 			string yer[12][12];
 			string yeracilan[12][12];
-			int x,y;
+			int acilacaklar[500];
+			int acilacaksayisi;
 			int acilankutu;
-			void bombayerleri();
+			int nerdeyim;
+			void MayinTarlasi();
 			void Oyun();
+			void Etrafiniacma(int nerde);
+			void Ekle(int y, int x);
 }k;
-void kolay::bombayerleri()
+void kolay::MayinTarlasi()
 {
+	int bomba[10];
+	int sorgulama[10];
+	int x,y;
+	int tekrar;
+	int varmiyokmu;
+	int gecici;
+	int sayi;
 	// Bomba yerlerini rastgele olarak ayarlama
 	for (int i = 0; i < 10; i++)
 	{
@@ -97,11 +104,25 @@ void kolay::bombayerleri()
 			}
 		}
 	}
+
+
+	for (int i = 0; i < 12; i++)
+	{
+		for (int j = 0; j < 12; j++)
+		{
+			if (i==0||i==11||j==0||j==11)
+			{
+				yer[i][j]="6";
+			}
+		}
+	}
 }
 void kolay::Oyun()
 {
+	nerdeyim=0;
 	acilankutu=0;
-	k.bombayerleri();
+	acilacaksayisi=0;
+	MayinTarlasi();
 	for (int i = 1; i < 11; i++)
 	{
 		for (int j = 1; j < 11; j++)
@@ -120,24 +141,35 @@ void kolay::Oyun()
 			cout<<endl;
 		}
 
-
-	while (acilankutu<90)
+		while (acilankutu<90)
 	{
 		cout<<"Açılacak Kutu Kordinatı(x) : ";
 		cin>>acx;
 		cout<<"Açılacak Kutu Kordinatı(y) : ";
 		cin>>acy;
-		if (yer[acx][acy]=="*")
+		if (yeracilan[acy][acx]=="X")
 		{
-			yeracilan[acx][acy]=yer[acx][acy];
-			acilankutu=91;
+			if (yer[acy][acx]=="*")
+		{
+			yeracilan[acy][acx]=yer[acy][acx];
+			acilankutu=100;
 		}
-		else if (atoi(yer[acx][acy].c_str())>0)
+		else if (atoi(yer[acy][acx].c_str())>0)
 		{
-			yeracilan[acx][acy]=yer[acx][acy];
+			yeracilan[acy][acx]=yer[acy][acx];
 			acilankutu++;
 		}
+		else if (atoi(yer[acy][acx].c_str())==0)
+		{
+			yeracilan[acy][acx]=yer[acy][acx];
+			acilankutu++;
+			Ekle(acy,acx);
 
+			while (nerdeyim < acilacaksayisi)
+			{
+				Etrafiniacma(nerdeyim);
+			}
+		}
 			system("CLS");
 			for (int i = 1; i < 11; i++)
 			{
@@ -147,7 +179,57 @@ void kolay::Oyun()
 				}
 			cout<<endl;
 			}
+		}
+		
+
 	}
+	if (acilankutu==100)
+	{
+		cout<<"Oyunu Kaybettiniz..."<<endl;
+	}
+	if (acilankutu==90)
+	{
+		cout<<"Kazandınız...";
+	}
+		
+}
+
+void kolay::Etrafiniacma(int nerde)
+{
+	int x,y;
+	for (int i = 0; i < 8; i++)
+	{
+		y=acilacaklar[nerde]+etraf[0][i];
+		x=acilacaklar[nerde+1]+etraf[1][i];
+		if (yeracilan[y][x]=="X")
+		{
+			yeracilan[y][x]=yer[y][x];
+			acilankutu++;
+			if (atoi(yer[y][x].c_str())==0)
+			{
+				Ekle(y,x);
+			}
+		}
+			
+			
+		
+		
+	}
+	nerdeyim+=2;
+}
+void kolay::Ekle(int y, int x)
+{
+	for (int i = 0; i < acilacaksayisi; i++)
+	{
+		if(acilacaklar[i]==y && acilacaklar[i+1]==x)
+		{
+			continue;
+		}
+	}
+	acilacaklar[acilacaksayisi]=y;
+	acilacaksayisi++;
+	acilacaklar[acilacaksayisi]=x;
+	acilacaksayisi++;
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -157,4 +239,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	k.Oyun();
 	return 0;
 }
-
