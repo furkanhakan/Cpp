@@ -7,6 +7,7 @@
 #include <locale.h>
 #include <time.h>
 #include <string>
+#include "ConsoleColor.h"
 #include <stdlib.h> //int to string and string to int
 
 using namespace std;
@@ -139,7 +140,14 @@ void kolay::Oyun()
 		{
 			for (int j = 1; j < 11; j++)
 			{
-				cout<<" "<<yeracilan[i][j]<<" "<<"|";
+				if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 			}
 			cout<<endl;
 		}
@@ -180,7 +188,14 @@ void kolay::Oyun()
 				{
 					for (int j = 1; j < 11; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -194,7 +209,14 @@ void kolay::Oyun()
 				{
 					for (int j = 1; j < 11; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -209,7 +231,14 @@ void kolay::Oyun()
 				{
 					for (int j = 1; j < 11; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -232,7 +261,21 @@ void kolay::Oyun()
 				{
 					for (int j = 1; j < 11; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							if (yeracilan[i][j]!="*")
+							{
+								cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+							else
+							{
+								cout<<red<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -407,7 +450,14 @@ void orta::Oyun()
 		{
 			for (int j = 1; j < 17; j++)
 			{
-				cout<<" "<<yeracilan[i][j]<<" "<<"|";
+				if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 			}
 			cout<<endl;
 		}
@@ -447,7 +497,14 @@ void orta::Oyun()
 				{
 					for (int j = 1; j < 17; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -461,7 +518,14 @@ void orta::Oyun()
 				{
 					for (int j = 1; j < 17; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -476,7 +540,14 @@ void orta::Oyun()
 				{
 					for (int j = 1; j < 17; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -484,6 +555,39 @@ void orta::Oyun()
 	}
 	if (acilankutu==256)
 	{
+		system("CLS");
+		for (int i = 1; i < 17; i++)
+		{
+			for (int j = 1; j < 17; j++)
+			{
+				if (yer[i][j]=="*")
+				{
+					yeracilan[i][j]=yer[i][j];
+				}
+			}
+		}
+		for (int i = 1; i < 17; i++)
+				{
+					for (int j = 1; j < 17; j++)
+					{
+						if (yeracilan[i][j]!="X")
+						{
+							if (yeracilan[i][j]!="*")
+							{
+								cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+							else
+							{
+								cout<<red<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
+					}
+				cout<<endl;
+				}
 		cout<<"Oyunu Kaybettiniz..."<<endl;
 	}
 	if (acilankutu==216)
@@ -602,9 +706,9 @@ void zor::MayinTarlasi()
 	}
 	
 	//Bomba etrafı sayma
-	for (int i = 1; i < 11; i++)
+	for (int i = 1; i < 17; i++)
 	{
-		for (int j = 1; j < 11; j++)
+		for (int j = 1; j < 25; j++)
 		{
 			if (yer[i][j]=="*")
 			{
@@ -655,7 +759,15 @@ void zor::Oyun()
 		{
 			for (int j = 1; j < 25; j++)
 			{
-				cout<<" "<<yeracilan[i][j]<<" "<<"|";
+				if (yeracilan[i][j]!="X")
+				{
+					cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+				}
+				else
+				{
+					cout<<" "<<yeracilan[i][j]<<" "<<"|";
+				}
+				
 			}
 			cout<<endl;
 		}
@@ -666,7 +778,7 @@ void zor::Oyun()
 		cin>>acx;
 		cout<<"Açılacak Kutu Kordinatı(y) : ";
 		cin>>acy;
-		if (acx>0 && acx<25 && acy>0 && acy<16)
+		if (acx>0 && acx<25 && acy>0 && acy<17)
 		{
 			if (yeracilan[acy][acx]=="X")
 			{
@@ -696,7 +808,14 @@ void zor::Oyun()
 				{
 					for (int j = 1; j < 25; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -710,7 +829,14 @@ void zor::Oyun()
 				{
 					for (int j = 1; j < 25; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -725,7 +851,14 @@ void zor::Oyun()
 				{
 					for (int j = 1; j < 25; j++)
 					{
-						cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						if (yeracilan[i][j]!="X")
+						{
+							cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
 					}
 				cout<<endl;
 				}
@@ -733,6 +866,39 @@ void zor::Oyun()
 	}
 	if (acilankutu==384)
 	{
+		system("CLS");
+		for (int i = 1; i < 17; i++)
+		{
+			for (int j = 1; j < 25; j++)
+			{
+				if (yer[i][j]=="*")
+				{
+					yeracilan[i][j]=yer[i][j];
+				}
+			}
+		}
+		for (int i = 1; i < 17; i++)
+				{
+					for (int j = 1; j < 25; j++)
+					{
+						if (yeracilan[i][j]!="X")
+						{
+							if (yeracilan[i][j]!="*")
+							{
+								cout<<green<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+							else
+							{
+								cout<<red<<" "<<yeracilan[i][j]<<" "<<white<<"|";
+							}
+						}
+						else
+						{
+							cout<<" "<<yeracilan[i][j]<<" "<<"|";
+						}
+					}
+				cout<<endl;
+				}
 		cout<<"Oyunu Kaybettiniz..."<<endl;
 	}
 	if (acilankutu==304)
@@ -784,5 +950,6 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL,"Turkish");
 	srand(time(NULL));
+	o.Oyun();
 	return 0;
 }
