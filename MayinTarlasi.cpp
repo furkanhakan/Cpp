@@ -14,6 +14,9 @@ using namespace std;
 
 int etraf[2][8] = { 	{-1,-0,+1,-1,-0,+1,-1,+1},
 						{-1,-1,-1,+1,+1,+1,-0,-0}	};
+int skor=0;//yazılacak skor
+int skor2=0;//dosyadan çekilen skor
+string bolum1,bolum2;
 
 //Kolay Bölüm - 10x10 luk matris 10 mayın
 
@@ -126,6 +129,7 @@ void kolay::Oyun()
 	nerdeyim=0;
 	acilankutu=0;
 	acilacaksayisi=0;
+	skor=0;
 	MayinTarlasi();
 	for (int i = 1; i < 11; i++)
 	{
@@ -151,7 +155,7 @@ void kolay::Oyun()
 			}
 			cout<<endl;
 		}
-
+			cout<<"Skorunuz : "<<skor<<endl;
 		while (acilankutu<90)
 	{
 		cout<<"Açılacak Kutu Kordinatı(x) : ";
@@ -171,6 +175,7 @@ void kolay::Oyun()
 				{
 					yeracilan[acy][acx]=yer[acy][acx];
 					acilankutu++;
+					skor+=atoi(yer[acy][acx].c_str());
 				}
 				else if (atoi(yer[acy][acx].c_str())==0)
 				{
@@ -199,6 +204,7 @@ void kolay::Oyun()
 					}
 				cout<<endl;
 				}
+					cout<<"Skorunuz : "<<skor<<endl;
 			}
 			else
 			{
@@ -220,6 +226,7 @@ void kolay::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 			}
 		}
 		else
@@ -242,6 +249,7 @@ void kolay::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 		}
 	}
 	if (acilankutu==100)
@@ -284,7 +292,36 @@ void kolay::Oyun()
 	if (acilankutu==90)
 	{
 		cout<<"Kazandınız...";
+		skor=skor*2;
 	}
+	cout<<"Skorunuz : "<<skor<<endl;
+	fstream puan;
+	fstream puandegisim;
+	puan.open("puan.txt",ios::out|ios::in|ios::app);
+	puandegisim.open("puandegis.txt",ios::out|ios::in|ios::app);
+	for (int i = 0; i < 3; i++)
+	{
+		puan>>bolum1>>bolum2>>skor2;
+		if (bolum1=="Kolay")
+		{
+			if (skor2>skor)
+			{
+				puandegisim<<"Kolay Bölüm "<<skor2<<endl;
+			}
+			else
+			{
+				puandegisim<<"Kolay Bölüm "<<skor<<endl;
+			}
+		}
+		else
+		{
+			puandegisim<<bolum1<<" "<<bolum2<<" "<<skor2<<endl;
+		}
+	}
+	puan.close();
+	puandegisim.close();
+	remove("puan.txt");
+	rename("puandegis.txt","puan.txt");
 		
 }
 void kolay::Etrafiniacma(int nerde)
@@ -298,6 +335,7 @@ void kolay::Etrafiniacma(int nerde)
 		{
 			yeracilan[y][x]=yer[y][x];
 			acilankutu++;
+			skor+=atoi(yer[y][x].c_str());
 			if (atoi(yer[y][x].c_str())==0)
 			{
 				Ekle(y,x);
@@ -436,6 +474,7 @@ void orta::Oyun()
 	nerdeyim=0;
 	acilankutu=0;
 	acilacaksayisi=0;
+	skor=0;
 	MayinTarlasi();
 	for (int i = 1; i < 17; i++)
 	{
@@ -461,6 +500,7 @@ void orta::Oyun()
 			}
 			cout<<endl;
 		}
+			cout<<"Skorunuz : "<<skor<<endl;
 		while (acilankutu<216)
 	{
 		cout<<"Açılacak Kutu Kordinatı(x) : ";
@@ -480,6 +520,7 @@ void orta::Oyun()
 				{
 					yeracilan[acy][acx]=yer[acy][acx];
 					acilankutu++;
+					skor+=atoi(yer[acy][acx].c_str());
 				}
 				else if (atoi(yer[acy][acx].c_str())==0)
 				{
@@ -508,6 +549,7 @@ void orta::Oyun()
 					}
 				cout<<endl;
 				}
+					cout<<"Skorunuz : "<<skor<<endl;
 			}
 			else
 			{
@@ -529,6 +571,7 @@ void orta::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 			}
 		}
 		else
@@ -551,6 +594,7 @@ void orta::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 		}
 	}
 	if (acilankutu==256)
@@ -593,8 +637,36 @@ void orta::Oyun()
 	if (acilankutu==216)
 	{
 		cout<<"Kazandınız...";
+		skor=skor*2;
 	}
-		
+		cout<<"Skorunuz : "<<skor<<endl;
+		fstream puan;
+	fstream puandegisim;
+	puan.open("puan.txt",ios::out|ios::in|ios::app);
+	puandegisim.open("puandegis.txt",ios::out|ios::in|ios::app);
+	for (int i = 0; i < 3; i++)
+	{
+		puan>>bolum1>>bolum2>>skor2;
+		if (bolum1=="Orta")
+		{
+			if (skor2>skor)
+			{
+				puandegisim<<"Orta Bölüm "<<skor2<<endl;
+			}
+			else
+			{
+				puandegisim<<"Orta Bölüm "<<skor<<endl;
+			}
+		}
+		else
+		{
+			puandegisim<<bolum1<<" "<<bolum2<<" "<<skor2<<endl;
+		}
+	}
+	puan.close();
+	puandegisim.close();
+	remove("puan.txt");
+	rename("puandegis.txt","puan.txt");
 }
 void orta::Etrafiniacma(int nerde)
 {
@@ -607,6 +679,7 @@ void orta::Etrafiniacma(int nerde)
 		{
 			yeracilan[y][x]=yer[y][x];
 			acilankutu++;
+			skor+=atoi(yer[y][x].c_str());
 			if (atoi(yer[y][x].c_str())==0)
 			{
 				Ekle(y,x);
@@ -745,6 +818,7 @@ void zor::Oyun()
 	nerdeyim=0;
 	acilankutu=0;
 	acilacaksayisi=0;
+	skor=0;
 	MayinTarlasi();
 	for (int i = 1; i < 17; i++)
 	{
@@ -771,6 +845,7 @@ void zor::Oyun()
 			}
 			cout<<endl;
 		}
+			cout<<"Skorunuz : "<<skor<<endl;
 
 		while (acilankutu<304)
 	{
@@ -791,6 +866,7 @@ void zor::Oyun()
 				{
 					yeracilan[acy][acx]=yer[acy][acx];
 					acilankutu++;
+					skor+=atoi(yer[acy][acx].c_str());
 				}
 				else if (atoi(yer[acy][acx].c_str())==0)
 				{
@@ -819,6 +895,7 @@ void zor::Oyun()
 					}
 				cout<<endl;
 				}
+					cout<<"Skorunuz : "<<skor<<endl;
 			}
 			else
 			{
@@ -840,6 +917,7 @@ void zor::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 			}
 		}
 		else
@@ -862,6 +940,7 @@ void zor::Oyun()
 					}
 				cout<<endl;
 				}
+				cout<<"Skorunuz : "<<skor<<endl;
 		}
 	}
 	if (acilankutu==384)
@@ -904,8 +983,36 @@ void zor::Oyun()
 	if (acilankutu==304)
 	{
 		cout<<"Kazandınız...";
+		skor=skor*2;
 	}
-		
+		cout<<"Skorunuz : "<<skor<<endl;
+	fstream puan;
+	fstream puandegisim;
+	puan.open("puan.txt",ios::out|ios::in|ios::app);
+	puandegisim.open("puandegis.txt",ios::out|ios::in|ios::app);
+	for (int i = 0; i < 3; i++)
+	{
+		puan>>bolum1>>bolum2>>skor2;
+		if (bolum1=="Zor")
+		{
+			if (skor2>skor)
+			{
+				puandegisim<<"Zor Bölüm "<<skor2<<endl;
+			}
+			else
+			{
+				puandegisim<<"Zor Bölüm "<<skor<<endl;
+			}
+		}
+		else
+		{
+			puandegisim<<bolum1<<" "<<bolum2<<" "<<skor2<<endl;
+		}
+	}
+	puan.close();
+	puandegisim.close();
+	remove("puan.txt");
+	rename("puandegis.txt","puan.txt");
 }
 void zor::Etrafiniacma(int nerde)
 {
@@ -918,6 +1025,7 @@ void zor::Etrafiniacma(int nerde)
 		{
 			yeracilan[y][x]=yer[y][x];
 			acilankutu++;
+			skor+=atoi(yer[y][x].c_str());
 			if (atoi(yer[y][x].c_str())==0)
 			{
 				Ekle(y,x);
@@ -950,6 +1058,57 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL,"Turkish");
 	srand(time(NULL));
-	o.Oyun();
+	int secim,zorluksecim;
+	
+	do
+	{
+	system("CLS");
+	cout<<"1 - YENİ OYUN"<<endl;
+	cout<<"2 - SKOR TABELASI"<<endl;
+	cout<<"Seçiminiz ->"; cin>>secim;
+	
+		if (secim==1)
+		{
+			do
+			{
+				system("CLS");
+				cout<<"1 - Kolay Bölüm(10x10)"<<endl;
+				cout<<"2 - Orta Bölüm(16x16)"<<endl;
+				cout<<"3 - Zor Bölüm(16x24)"<<endl;
+				cout<<"Seçiminiz ->"; cin>>zorluksecim;
+				if (zorluksecim==1)
+				{
+					system("CLS");
+					k.Oyun();
+				}
+				else if (zorluksecim==2)
+				{
+					system("CLS");
+					o.Oyun();
+				}
+				else if(zorluksecim==3)
+				{
+					system("CLS");
+					z.Oyun();
+				}
+				else
+				{
+					cout<<"Yanlış Seçim Yaptınız..!";
+					system("Pause");
+				}
+			} while (zorluksecim>3 || zorluksecim<1);
+		}
+		if (secim==2)
+		{
+			fstream puan;
+			puan.open("puan.txt",ios::out|ios::in|ios::app);
+			for (int i = 0; i < 3; i++)
+			{
+				puan>>bolum1>>bolum2>>skor;
+				cout<<bolum1<<" "<<bolum2<<" "<<skor<<endl;
+			}
+			puan.close();
+		}
+	} while (secim>2 || secim<1);
 	return 0;
 }
