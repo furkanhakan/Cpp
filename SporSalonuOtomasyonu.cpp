@@ -181,6 +181,7 @@ void Gym::UpdateMember()
 	void MainMenu();
 	Gym gym;
 	Member member;
+	MemberControl memcont;
 	int no;
 	gotoxy(40,8+(nom*2)+4);
 	cin>>no;
@@ -199,17 +200,27 @@ void Gym::UpdateMember()
 			cout<<"   KAYIT GÜNCELLEME";
 			member.EnterInfo();
 			member.no=no;
+
+		}
+	
+	}
+	file.close();
+	file.open("Members.txt",ios::in|ios::out|ios::app);
+	while (file>>memcont.no>>memcont.name>>memcont.surname>>memcont.regisdate>>memcont.enddate)
+	{
+		if (no==memcont.no)
+		{
 			filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<
 			setw(20)<<member.surname<<setw(20)<<
 			member.regisdate<<setw(20)<<member.enddate<<endl;
 		}
 		else
 		{
-				filetemp<<setw(10)<<member.no<<setw(20)<<member.name<<
-				setw(20)<<member.surname<<setw(20)<<
-				member.regisdate<<setw(20)<<member.enddate<<endl;
-				counter++;
+			filetemp<<setw(10)<<memcont.no<<setw(20)<<memcont.name<<
+			setw(20)<<memcont.surname<<setw(20)<<
+			memcont.regisdate<<setw(20)<<memcont.enddate<<endl;
 		}
+
 	}
 	file.close();
 	remove("Members.txt");
@@ -279,6 +290,7 @@ void Gym::DeleteMember()
 	void Wait(int time);
 	void gotoxy(short x,short y);
 	void MemberDelete();
+	void MemberViews();
 	void MainMenu();
 	Member member;
 	Gym gym;
@@ -309,11 +321,19 @@ void Gym::DeleteMember()
 	rename("Memberstemp.txt","Members.txt");
 	if (counter==0)
 		{
-			cout<<red<<"Kullanıcı Bulunamadı."; cout<<white;
+			gotoxy(40,6+(nom*2)+3);
+			cout<<red<<"Kullanıcı Bulunamadı.  "; cout<<white;
 		}
 		else
 		{
-			cout<<green<<"Kullanıcı Silindi."; cout<<white;
+			nom=nom-1;
+			system("CLS");
+			MemberViews();
+			gotoxy(47,2);
+			cout<<"   KAYIT SİLME    ";
+			gym.ShowMember();
+			gotoxy(40,6+(nom*2)+3);
+			cout<<green<<"    Kullanıcı Silindi.   "; cout<<white;
 		}
 
 	gotoxy(1,(nom*2)+15);
@@ -581,6 +601,7 @@ void MemberDelete()
 //ilk Menu Yazıları
 void Menu_Start()
 {
+
 	gotoxy(4,11);
 	cout<<"[1] YENİ KAYIT EKLEME";
 	gotoxy(4,13);
@@ -725,7 +746,6 @@ void MainMenu()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL,"Turkish");
-
 	MainMenu();
 	cout<<endl<<endl<<endl;
 	return 0;
