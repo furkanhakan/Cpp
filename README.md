@@ -1,1 +1,1 @@
-Öncelikle kendimi tanıtmak istiyorum. Ben Furkan HAKAN. Düzce Üniversitesi Bilgisayar Mühendisliği 1.Sınıf Öğrencisiyim. Bu sayfada C++ ile Yaptığım Örnekleri Sizlerle Paylaşmak İstiyorum. Umarım sizlere küçükte olsa bir faydam dokunur.
+Hoşgeldiniz. Ben Furkan HAKAN. Düzce Üniversitesi Bilgisayar Mühendisliği 1.Sınıf Öğrencisiyim. Bu sayfada C++ ile yaptığım projeleri sizlerle paylaşmak istiyorum. Umarım sizlere küçükte olsa bir faydam dokunur.
