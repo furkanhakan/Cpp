@@ -1058,13 +1058,14 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL,"Turkish");
 	srand(time(NULL));
-	int secim,zorluksecim;
+	int secim,zorluksecim,silsecim;
 	
 	do
 	{
 	system("CLS");
 	cout<<"1 - YENİ OYUN"<<endl;
 	cout<<"2 - SKOR TABELASI"<<endl;
+	cout<<"3 - SIFIRLA"<<endl;
 	cout<<"Seçiminiz ->"; cin>>secim;
 	
 		if (secim==1)
@@ -1109,6 +1110,73 @@ int _tmain(int argc, _TCHAR* argv[])
 			}
 			puan.close();
 		}
-	} while (secim>2 || secim<1);
+		if (secim==3)
+		{
+				fstream dosya;
+				dosya.open("puan.txt",ios::out|ios::in|ios::app);
+				fstream dosyasil;
+				dosyasil.open("puansil.txt",ios::in|ios::out|ios::app);
+				system("CLS");
+				cout<<"1 - Kolay Bölüm(10x10)"<<endl;
+				cout<<"2 - Orta Bölüm(16x16)"<<endl;
+				cout<<"3 - Zor Bölüm(16x24)"<<endl;
+				cout<<"4 - TÜMÜMNÜ SIFIRLA"<<endl;
+				cout<<"Seçiminiz ->"; cin>>silsecim;
+				switch (silsecim)
+				{
+				case 1:
+					while (dosya>>bolum1>>bolum2>>skor)
+					   {
+						   if (bolum1=="Kolay")
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<"0"<<endl;
+						   }
+						   else
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<skor<<endl;
+						   }
+					   }
+					break;
+				case 2:
+					while (dosya>>bolum1>>bolum2>>skor)
+					   {
+						   if (bolum1=="Orta")
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<"0"<<endl;
+						   }
+						   else
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<skor<<endl;
+						   }
+					   }
+					break;
+				case 3:
+					while (dosya>>bolum1>>bolum2>>skor)
+					   {
+						   if (bolum1=="Zor")
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<"0"<<endl;
+						   }
+						   else
+						   {
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<skor<<endl;
+						   }
+					   }
+					break;
+				case 4:
+					while (dosya>>bolum1>>bolum2>>skor)
+					   {	
+							   dosyasil<<bolum1<<" "<<bolum2<<" "<<"0"<<endl;
+					   }
+					break;
+				default:cout<<"Yanlış seçim yaptınız.";
+					break;
+				}
+				dosya.close();
+				dosyasil.close();
+				remove("puan.txt");
+				rename("puansil.txt","puan.txt");
+		}
+	} while (secim>3 || secim<1);
 	return 0;
 }
