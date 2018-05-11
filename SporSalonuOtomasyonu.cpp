@@ -1,7 +1,6 @@
 /*                                  Aşağıdaki   #include "ConsoleColor.h"    kodu yazıları renklendirmek için kullanılmıştır.
                                     Bu kodu kullanmak için projenize Header olarak kodları eklemeniz gerekmektedir
 				    			İlgili Kodlar Paylaşılmıştır.
-*/
 // SporSalonuOtomasyon.cpp : Defines the entry point for the console application.
 //
 
