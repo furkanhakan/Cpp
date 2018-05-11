@@ -1059,7 +1059,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	setlocale(LC_ALL,"Turkish");
 	srand(time(NULL));
 	int secim,zorluksecim,silsecim;
-	
+
 	do
 	{
 	system("CLS");
@@ -1109,6 +1109,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				cout<<bolum1<<" "<<bolum2<<" "<<skor<<endl;
 			}
 			puan.close();
+	
 		}
 		if (secim==3)
 		{
@@ -1178,5 +1179,6 @@ int _tmain(int argc, _TCHAR* argv[])
 				rename("puansil.txt","puan.txt");
 		}
 	} while (secim>3 || secim<1);
+
 	return 0;
 }
